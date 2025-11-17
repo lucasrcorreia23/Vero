@@ -43,7 +43,7 @@ import ScheduleWarningToast from './ScheduleWarningToast';
 import AddFundsSuccessToast from './AddFundsSuccessToast';
 import Sidebar from './Sidebar';
 
-export default function Home({ onViewRequestDetails, showSuccessToast, onCloseToast, showRejectToast, onCloseRejectToast, showScheduleToast, onCloseScheduleToast, scheduledDate, showAddFundsToast, onCloseAddFundsToast, isFromScheduleFlow, receivingCompany, showAddFundsPromptModal }) {
+export default function Home({ onViewRequestDetails, showSuccessToast, onCloseToast, showRejectToast, onCloseRejectToast, showScheduleToast, onCloseScheduleToast, scheduledDate, showAddFundsToast, onCloseAddFundsToast, isFromScheduleFlow, receivingCompany, showAddFundsPromptModal, onLogout }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -134,7 +134,7 @@ export default function Home({ onViewRequestDetails, showSuccessToast, onCloseTo
         </div>
       )}
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar onLogout={onLogout} />
       
       {/* Main Content */}
       <div className="flex flex-col h-screen items-center relative shrink-0 flex-1" data-name="Container" data-node-id="0:469">

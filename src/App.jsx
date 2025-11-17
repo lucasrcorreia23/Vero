@@ -3,9 +3,10 @@ import Home from './components/Home'
 import PaymentRequestDetail from './components/PaymentRequestDetail'
 import AddFundsPromptModal from './components/AddFundsPromptModal'
 import AddFundsModal from './components/AddFundsModal'
+import Login from './components/Login'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home')
+  const [currentPage, setCurrentPage] = useState('login')
   const [showSuccessToast, setShowSuccessToast] = useState(false)
   const [showRejectToast, setShowRejectToast] = useState(false)
   const [showScheduleToast, setShowScheduleToast] = useState(false)
@@ -121,6 +122,10 @@ function App() {
     setCurrentPage('home')
   }
 
+  const navigateToLogin = () => {
+    setCurrentPage('login')
+  }
+
   const handlePaymentAccepted = () => {
     // Check if there are sufficient funds
     const hasSufficientFunds = accountBalance >= paymentAmount
@@ -233,6 +238,12 @@ function App() {
     return dueDate === today
   }
 
+  if (currentPage === 'login') {
+    return (
+      <Login onContinue={navigateToHome} />
+    )
+  }
+
   if (currentPage === 'payment-detail') {
     return (
       <>
@@ -287,6 +298,7 @@ function App() {
         isFromScheduleFlow={isFromScheduleFlow}
         receivingCompany={receivingCompany}
         showAddFundsPromptModal={showAddFundsPromptAfterSchedule}
+        onLogout={navigateToLogin}
       />
     </>
   )

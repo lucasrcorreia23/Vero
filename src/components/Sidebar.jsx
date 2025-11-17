@@ -16,7 +16,29 @@ const imgUnion = getAssetUrl("Union.svg");
 const imgSeparator = getAssetUrl("d6227ac8315906f615f05a1c1ba03d43d6df7524.svg");
 const imgExclude = getAssetUrl("union-profile.svg");
 
-export default function Sidebar() {
+import { useState, useEffect, useRef } from 'react';
+import LogoutDropdown from './LogoutDropdown';
+
+export default function Sidebar({ onLogout }) {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    }
+
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showDropdown]);
   return (
     <div className="bg-[#fafafa] flex flex-col h-screen items-start relative shrink-0 w-[256px]" data-name="Sidebar Vero" data-node-id="0:388">
       <div className="bg-[#fafafa] box-border flex flex-col gap-2 items-start pl-[13px] pr-2 py-2 relative shrink-0 w-full" data-name="SidebarHeader" data-node-id="0:389">
@@ -134,8 +156,23 @@ export default function Sidebar() {
                 </div>
               </div>
             </div>
-            <div className="relative shrink-0 size-4" data-name="Icon / EllipsisVertical" data-node-id="0:467">
-              <MoreVertical className="size-full" />
+            <div className="relative shrink-0" ref={dropdownRef}>
+              <button
+                onClick={() => setShowDropdown(!showDropdown)}
+                className="relative shrink-0 size-4 hover:opacity-70 transition-opacity cursor-pointer"
+                data-name="Icon / EllipsisVertical"
+                data-node-id="0:467"
+              >
+                <MoreVertical className="size-full" />
+              </button>
+              {showDropdown && (
+                <div className="absolute bottom-10 right-0 z-50">
+                  <LogoutDropdown 
+                    onLogout={onLogout}
+                    onClose={() => setShowDropdown(false)}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
