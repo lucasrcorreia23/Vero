@@ -174,7 +174,7 @@ export default function PaymentRequestDetail({ onBack, onAccept, onReject, onSch
                 <p className="font-medium leading-none not-italic relative shrink-0 text-sm text-[#171717] text-nowrap whitespace-pre" data-node-id="13:4771">
                   USD
                 </p>
-                <p className="font-normal leading-none not-italic relative shrink-0 text-[48px] text-[#171717] text-center w-[218px]" data-node-id="13:4772">
+                <p className="font-normal leading-none not-italic relative shrink-0 text-[48px] text-[#171717] text-center " data-node-id="13:4772">
                   -{((paymentAmount / 100).toFixed(2).split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ',' + (paymentAmount / 100).toFixed(2).split('.')[1])}
                 </p>
                 <p className="font-normal leading-4 not-italic relative shrink-0 text-[#a3a3a3] text-xs text-nowrap whitespace-pre" data-node-id="13:4773">

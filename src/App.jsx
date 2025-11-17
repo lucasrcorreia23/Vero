@@ -110,9 +110,9 @@ function App() {
   // 
   // ============================================================================
 
-  const [accountBalance] = useState(400000) // Change the Actual Balance from the account (in cents)
-  const [paymentAmount] = useState(402492) // Change the Payment Amount from the request (in cents)
-  const [dueDate] = useState('2025-11-17') // Change the Due date in YYYY-MM-DD format from the request
+  const [accountBalance] = useState(10000) // Change the Actual Balance from the account (in cents)
+  const [paymentAmount] = useState(802492) // Change the Payment Amount from the request (in cents)
+  const [dueDate] = useState('2025-11-19') // Change the Due date in YYYY-MM-DD format from the request
 
   const navigateToPaymentDetail = () => {
     setCurrentPage('payment-detail')

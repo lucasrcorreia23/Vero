@@ -6,9 +6,7 @@ export default function AddFundsConfirmModal({ onCancel, onConfirm }) {
           <p className="font-medium leading-7 relative shrink-0 text-lg text-[#171717] w-full" data-node-id="I13:4723;7:4969">
             Add funds now?
           </p>
-          <p className="font-normal leading-5 relative shrink-0 text-sm text-[#737373] w-full" data-node-id="I13:4723;7:4970">
-            Adding funds ensures this payment will be sent on the scheduled date.
-          </p>
+         
         </div>
         <div className="flex items-center justify-between relative shrink-0 w-full" data-name="button section" data-node-id="I13:4723;7:4971">
           <button 
