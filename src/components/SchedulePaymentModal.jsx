@@ -125,7 +125,7 @@ export default function SchedulePaymentModal({ onClose, onSchedule, receivingCom
                 Payment Date*
               </p>
               <div className="bg-white border border-[#e5e5e5] border-solid h-9 relative rounded-md shrink-0 w-full hover:border-[#171717] transition-colors focus-within:border-[#171717] focus-within:ring-1 focus-within:ring-[#171717]" data-name="DatePickerTrigger" data-node-id="13:4324">
-                <div className="box-border content-stretch flex gap-2 h-9 items-center overflow-clip px-3 py-2 relative rounded-[inherit] w-full">
+                <div className="box-border flex gap-2 h-9 items-center overflow-clip px-3 py-2 relative rounded-[inherit] w-full">
                   <div className="overflow-clip relative shrink-0 size-4 text-[#737373]" data-name="Calendar Icon" data-node-id="13:4325">
                     <Calendar className="size-full" />
                   </div>
@@ -135,7 +135,7 @@ export default function SchedulePaymentModal({ onClose, onSchedule, receivingCom
                     onChange={handleDateChange}
                     max={maxDate}
                     min="1900-01-01"
-                    className="modern-date-input basis-0 font-medium grow leading-[14px] min-h-px min-w-px not-italic overflow-ellipsis overflow-hidden relative shrink-0 text-sm text-[#0a0a0a] bg-transparent border-none outline-none w-full cursor-pointer"
+                    className="modern-date-input basis-0 font-medium grow leading-[14px] min-h-px min-w-px not-italic overflow-ellipsis overflow-hidden relative shrink-0 text-sm text-[#737373] bg-transparent border-none outline-none w-full cursor-pointer"
                     placeholder="Pick a date"
                     data-node-id="13:4326"
                   />
