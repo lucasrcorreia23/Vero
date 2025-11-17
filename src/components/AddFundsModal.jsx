@@ -119,7 +119,7 @@ export default function AddFundsModal({ onClose, onAddFunds, defaultAmount, acco
                 </div>
               </div>
               <p className="font-normal leading-[1.2] not-italic opacity-90 relative shrink-0 text-xs text-[#171717] text-nowrap whitespace-pre" data-node-id="26:576">
-              This payment will only be sent if sufficient balance is available.
+             
               </p>
             </div>
             <div className="flex flex-col gap-2 items-start relative shrink-0 w-full" data-name="Date Picker" data-node-id="13:4587">

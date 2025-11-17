@@ -448,10 +448,10 @@ export default function Home({ onViewRequestDetails, showSuccessToast, onCloseTo
                       </div>
                     </div>
                     {[
-                      { amount: "-R$ 4,024.92", color: "#f87171" },
-                      { amount: "+R$ 124,024.92", color: "#25af57" },
-                      { amount: "R$ 4,024.92", color: "#0a0a0a" },
-                      { amount: "R$ 124,024.92", color: "#0a0a0a" },
+                      { amount: "-R$ 4.024,92", color: "#f87171" },
+                      { amount: "+R$ 124.024,92", color: "#25af57" },
+                      { amount: "R$ 4.024,92", color: "#0a0a0a" },
+                      { amount: "R$ 124.024,92", color: "#0a0a0a" },
                     ].map((item, idx) => (
                       <div key={idx} className="border-b border-[#e5e5e5] box-border flex gap-[10px] h-[57px] items-center min-w-[85px] p-2 relative shrink-0 w-full" data-name="Table / Cell">
                         <div className="basis-0 flex flex-col font-normal grow justify-center leading-none min-h-px min-w-px not-italic overflow-ellipsis overflow-hidden relative shrink-0 text-sm text-nowrap text-right" style={{ color: item.color }}>
