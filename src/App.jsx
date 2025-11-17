@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Home from './components/Home'
 import PaymentRequestDetail from './components/PaymentRequestDetail'
 import AddFundsPromptModal from './components/AddFundsPromptModal'
@@ -7,6 +7,15 @@ import Login from './components/Login'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('login')
+  
+  // Update page title based on current page
+  useEffect(() => {
+    if (currentPage === 'login') {
+      document.title = 'Login'
+    } else {
+      document.title = 'vera.finance'
+    }
+  }, [currentPage])
   const [showSuccessToast, setShowSuccessToast] = useState(false)
   const [showRejectToast, setShowRejectToast] = useState(false)
   const [showScheduleToast, setShowScheduleToast] = useState(false)
