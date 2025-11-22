@@ -37,8 +37,25 @@ body {
   }
 }
 
+@keyframes slideOutToRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+}
+
 .animate-slide-in-right {
-  animation: slideInFromRight 0.4s ease-out;
+  animation: slideInFromRight 0.4s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+.animate-slide-out-right {
+  animation: slideOutToRight 0.25s ease-in forwards;
+  will-change: transform, opacity;
 }
 
 /* Modern Date Input Styling */

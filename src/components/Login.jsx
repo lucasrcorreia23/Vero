@@ -101,8 +101,13 @@ export default function Login({ onContinue }) {
             </div>
 
             {/* Apple Login Button */}
-            <div className="bg-white border border-[#e5e5e5] border-solid box-border flex flex-col gap-2 h-10 items-center justify-center px-[125px] py-0 relative rounded-lg shadow-sm shrink-0 w-full" data-name="Continue with Apple / Centre / Fixed" data-node-id="45:2860">
-              <div className="bg-white box-border flex gap-[15px] items-center justify-center p-2 relative rounded-[10px] shrink-0" data-name="Apple Button" data-node-id="45:2861">
+            <button
+              onClick={handleContinue}
+              className="bg-white border border-[#e5e5e5] border-solid box-border flex flex-col gap-2 h-10 items-center justify-center px-[125px] py-0 relative rounded-lg shadow-sm shrink-0 w-full hover:bg-gray-50 hover:border-gray-300 transition-colors cursor-pointer" 
+              data-name="Continue with Apple / Centre / Fixed" 
+              data-node-id="45:2860"
+            >
+              <div className="bg-transparent box-border flex gap-[15px] items-center justify-center p-2 relative rounded-[10px] shrink-0" data-name="Apple Button" data-node-id="45:2861">
                 <div className="h-5 overflow-clip relative shrink-0 w-4" data-name="Apple Icon" data-node-id="45:2862">
                   <div className="absolute bottom-[5%] left-0 right-[6.25%] top-0" data-name="" data-node-id="I45:2862;27:4834">
                     <div className="absolute inset-0">
@@ -114,7 +119,7 @@ export default function Login({ onContinue }) {
                   Login with Apple
                 </p>
               </div>
-            </div>
+            </button>
           </div>
         </div>
       </div>

@@ -34,7 +34,7 @@ const imgYellowShield = getAssetUrl("yellow-shield.svg");
 const imgYellowStar = getAssetUrl("yellow-start.png");
 const imgStarSparkle = getAssetUrl("6e2852c819a76969f4e61b7bb27e59217c867561.svg");
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import EllipsisButton from './EllipsisButton';
 import DropdownMenu from './DropdownMenu';
 import SuccessToast from './SuccessToast';
@@ -46,6 +46,14 @@ import Sidebar from './Sidebar';
 export default function Home({ onViewRequestDetails, showSuccessToast, onCloseToast, showRejectToast, onCloseRejectToast, showScheduleToast, onCloseScheduleToast, scheduledDate, showAddFundsToast, onCloseAddFundsToast, isFromScheduleFlow, receivingCompany, showAddFundsPromptModal, onLogout }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const successToastRef = useRef(null);
+  const rejectToastRef = useRef(null);
+  const scheduleToastRef = useRef(null);
+  const addFundsToastRef = useRef(null);
+  const [isClosingSuccess, setIsClosingSuccess] = useState(false);
+  const [isClosingReject, setIsClosingReject] = useState(false);
+  const [isClosingSchedule, setIsClosingSchedule] = useState(false);
+  const [isClosingAddFunds, setIsClosingAddFunds] = useState(false);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -64,45 +72,113 @@ export default function Home({ onViewRequestDetails, showSuccessToast, onCloseTo
     };
   }, [showDropdown]);
 
-  // Auto-hide success toast after 7 seconds
+  // Helper function to close toast with smooth animation
+  const closeToastWithAnimation = (setIsClosing, onClose) => {
+    // Use requestAnimationFrame to ensure smooth transition
+    requestAnimationFrame(() => {
+      setIsClosing(true);
+      // Wait for animation to complete before removing from DOM
+      setTimeout(() => {
+        onClose();
+        // Reset closing state after component unmounts
+        setTimeout(() => setIsClosing(false), 50);
+      }, 250); // Match animation duration
+    });
+  };
+
+  // Reset closing states when toasts are shown (only if not already closing)
+  useEffect(() => {
+    if (showSuccessToast && !isClosingSuccess) {
+      setIsClosingSuccess(false);
+    }
+  }, [showSuccessToast, isClosingSuccess]);
+
+  useEffect(() => {
+    if (showRejectToast && !isClosingReject) {
+      setIsClosingReject(false);
+    }
+  }, [showRejectToast, isClosingReject]);
+
+  useEffect(() => {
+    if (showScheduleToast && !isClosingSchedule) {
+      setIsClosingSchedule(false);
+    }
+  }, [showScheduleToast, isClosingSchedule]);
+
+  useEffect(() => {
+    if (showAddFundsToast && !isClosingAddFunds) {
+      setIsClosingAddFunds(false);
+    }
+  }, [showAddFundsToast, isClosingAddFunds]);
+
+  // Close toasts when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      // Check if click is outside each visible toast and close it with animation
+      if (showSuccessToast && !isClosingSuccess && successToastRef.current && !successToastRef.current.contains(event.target)) {
+        closeToastWithAnimation(setIsClosingSuccess, onCloseToast);
+      }
+      if (showRejectToast && !isClosingReject && rejectToastRef.current && !rejectToastRef.current.contains(event.target)) {
+        closeToastWithAnimation(setIsClosingReject, onCloseRejectToast);
+      }
+      if (showScheduleToast && !isClosingSchedule && scheduleToastRef.current && !scheduleToastRef.current.contains(event.target)) {
+        closeToastWithAnimation(setIsClosingSchedule, onCloseScheduleToast);
+      }
+      if (showAddFundsToast && !isClosingAddFunds && addFundsToastRef.current && !addFundsToastRef.current.contains(event.target)) {
+        closeToastWithAnimation(setIsClosingAddFunds, onCloseAddFundsToast);
+      }
+    }
+
+    const hasAnyToastVisible = showSuccessToast || showRejectToast || showScheduleToast || showAddFundsToast;
+    
+    if (hasAnyToastVisible) {
+      document.addEventListener('mousedown', handleClickOutside);
+      
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [showSuccessToast, showRejectToast, showScheduleToast, showAddFundsToast, isClosingSuccess, isClosingReject, isClosingSchedule, isClosingAddFunds, onCloseToast, onCloseRejectToast, onCloseScheduleToast, onCloseAddFundsToast]);
+
+  // Auto-hide success toast after 5 seconds
   useEffect(() => {
     if (showSuccessToast) {
       const timer = setTimeout(() => {
-        onCloseToast();
-      }, 7000);
+        closeToastWithAnimation(setIsClosingSuccess, onCloseToast);
+      }, 5000);
 
       return () => clearTimeout(timer);
     }
   }, [showSuccessToast, onCloseToast]);
 
-  // Auto-hide reject toast after 7 seconds
+  // Auto-hide reject toast after 5 seconds
   useEffect(() => {
     if (showRejectToast) {
       const timer = setTimeout(() => {
-        onCloseRejectToast();
-      }, 7000);
+        closeToastWithAnimation(setIsClosingReject, onCloseRejectToast);
+      }, 5000);
 
       return () => clearTimeout(timer);
     }
   }, [showRejectToast, onCloseRejectToast]);
 
-  // Auto-hide schedule toast after 7 seconds
+  // Auto-hide schedule toast after 5 seconds
   useEffect(() => {
     if (showScheduleToast) {
       const timer = setTimeout(() => {
-        onCloseScheduleToast();
-      }, 7000);
+        closeToastWithAnimation(setIsClosingSchedule, onCloseScheduleToast);
+      }, 5000);
 
       return () => clearTimeout(timer);
     }
   }, [showScheduleToast, onCloseScheduleToast]);
 
-  // Auto-hide add funds toast after 7 seconds
+  // Auto-hide add funds toast after 5 seconds
   useEffect(() => {
     if (showAddFundsToast) {
       const timer = setTimeout(() => {
-        onCloseAddFundsToast();
-      }, 7000);
+        closeToastWithAnimation(setIsClosingAddFunds, onCloseAddFundsToast);
+      }, 5000);
 
       return () => clearTimeout(timer);
     }
@@ -111,25 +187,37 @@ export default function Home({ onViewRequestDetails, showSuccessToast, onCloseTo
     <div className="bg-white flex items-start relative w-full min-h-screen" data-name="Home" data-node-id="0:387">
       {/* Success Toast */}
       {showSuccessToast && (
-        <div className="absolute right-[40px] bottom-[64px] z-50 w-[380px] max-w-[calc(100vw-128px)] animate-slide-in-right">
+        <div 
+          ref={successToastRef} 
+          className={`absolute right-[40px] bottom-[64px] z-50 w-[380px] max-w-[calc(100vw-128px)] ${isClosingSuccess ? 'animate-slide-out-right' : 'animate-slide-in-right'}`}
+        >
           <SuccessToast onClose={onCloseToast} />
         </div>
       )}
       {/* Reject Success Toast */}
       {showRejectToast && (
-        <div className="absolute right-[40px] bottom-[64px] z-50 w-[380px] max-w-[calc(100vw-128px)] animate-slide-in-right">
+        <div 
+          ref={rejectToastRef} 
+          className={`absolute right-[40px] bottom-[64px] z-50 w-[380px] max-w-[calc(100vw-128px)] ${isClosingReject ? 'animate-slide-out-right' : 'animate-slide-in-right'}`}
+        >
           <RejectSuccessToast onClose={onCloseRejectToast} />
         </div>
       )}
       {/* Schedule Warning Toast */}
       {showScheduleToast && (
-        <div className="absolute right-[40px] bottom-[64px] z-50 w-[440px] max-w-[calc(100vw-128px)] animate-slide-in-right">
+        <div 
+          ref={scheduleToastRef} 
+          className={`absolute right-[40px] bottom-[64px] z-50 w-[440px] max-w-[calc(100vw-128px)] ${isClosingSchedule ? 'animate-slide-out-right' : 'animate-slide-in-right'}`}
+        >
           <ScheduleWarningToast onClose={onCloseScheduleToast} scheduledDate={scheduledDate} receivingCompany={receivingCompany} />
         </div>
       )}
       {/* Add Funds Success Toast */}
       {showAddFundsToast && (
-        <div className="absolute right-[40px] bottom-[64px] z-50 w-[380px] max-w-[calc(100vw-128px)] animate-slide-in-right">
+        <div 
+          ref={addFundsToastRef} 
+          className={`absolute right-[40px] bottom-[64px] z-50 w-[380px] max-w-[calc(100vw-128px)] ${isClosingAddFunds ? 'animate-slide-out-right' : 'animate-slide-in-right'}`}
+        >
           <AddFundsSuccessToast onClose={onCloseAddFundsToast} />
         </div>
       )}
